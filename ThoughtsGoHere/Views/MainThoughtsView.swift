@@ -20,11 +20,7 @@ struct MainThoughtsView: View {
         NavigationView {
             ScrollView {
                 ForEach(thoughtListVM.thoughtCellVMs) { thoughtCellVM in
-                    ThoughtCell(thoughtCellVM: thoughtCellVM)
-                }
-                if showNewThought {
-                    //ThoughtCell(thoughtCellVM: ThoughtCellViewModel(thought: Thought(id: UUID().uuidString, title: "", body: "")))
-                    ThoughtDetail(thought: Thought(title: "", body: ""))
+                    ThoughtCell(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtCellVM)
                 }
             }
             .padding(.horizontal)
@@ -34,59 +30,84 @@ struct MainThoughtsView: View {
             .navigationBarItems(trailing:
                                     
                                     Button(action: {
-                                            NSLog("New note created")
-                                        self.showNewThought.toggle()
+                                        NSLog("New note created")
+                                        //self.showNewThought.toggle()
+                                        self.thoughtListVM.thoughtCellVMs.append(ThoughtCellViewModel(thought: Thought(title: "-untitled-", body: "")))
+                                        self.thoughtListVM.selectedThoughtCellVM =
+                                            ThoughtCellViewModel(thought: Thought(title: "", body: ""))
+                                            
+                                        self.thoughtListVM.showSheet = true
+                                        
                                     }) {
                                         Image(systemName: "square.and.pencil").font(.system(size: 30.0))
                                     }
             )
         }.foregroundColor(Color.black)
-        
+        .sheet(isPresented: self.$thoughtListVM.showSheet) {
+            ThoughtDetail(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtListVM.selectedThoughtCellVM ?? ThoughtCellViewModel(thought: Thought(title: "", body: "")))
+        }
     }
 }
 
 struct ThoughtDetail : View {
     
-    @State var thought: Thought
-    @State var isEditing = false
+    @ObservedObject var thoughtListVM : ThoughtListViewModel
+    @ObservedObject var thoughtCellVM : ThoughtCellViewModel
     
     var body: some View {
         
-        TextEditor(text: $thought.body)
-            .font(.subheadline)
-            .foregroundColor(Color.black)
-            .padding()
-            .disabled(isEditing)
-            .navigationBarTitle(thought.title)
-            .navigationBarItems(trailing:
-                                    Button(action: {
-                                        self.isEditing.toggle()
-                                    }) {
-                                        Text(isEditing ? "edit" : "done")
-                                            .foregroundColor(.blue)
-                                            .padding()
-                                    }
-            )
-        
+        VStack {
+            
+            HStack {
+                TextField("thought title...", text: self.$thoughtCellVM.thought.title)
+                    .font(.system(size: 30, weight: .heavy, design: .default))
+                    .padding(.leading)
+                Spacer()
+                Button(action: {
+                    self.thoughtListVM.showSheet = false
+                    self.thoughtListVM.selectedThoughtCellVM = nil
+                }) {
+                    Text("done")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 20))
+                        .padding()
+                }
+            }
+            
+            TextEditor(text: self.$thoughtCellVM.thought.body)
+                .font(.system(size: 15))
+                .foregroundColor(Color.black)
+                .padding()
+                //.disabled(isEditing)
+                .background(Color.white.opacity(0.6))
+                .cornerRadius(10)
+                .clipped()
+                .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 0)
+                
+            Spacer()
+            
+        }.padding([.top, .horizontal])
+        .background(peach).edgesIgnoringSafeArea(.all)
     }
 }
 
 struct ThoughtCell: View {
     
+    @ObservedObject var thoughtListVM : ThoughtListViewModel
     @ObservedObject var thoughtCellVM : ThoughtCellViewModel
     
     var body: some View {
-        NavigationLink(destination:
-                        ThoughtDetail(thought: thoughtCellVM.thought)
-                        .background(peach.opacity(0.5))
-        ) {
-            HStack {
-                Image(systemName: "doc.text.viewfinder").font(.largeTitle)
-                TextField("thought title...", text: $thoughtCellVM.thought.title)
-                Spacer()
-            }.padding()
-            .background(Color.white.opacity(0.5))
-            .cornerRadius(15)
+        
+        HStack {
+            Image(systemName: "doc.text.viewfinder").font(.largeTitle)
+            Text(thoughtCellVM.thought.title)
+            Spacer()
+        }.padding()
+        .background(Color.white.opacity(0.5))
+        .cornerRadius(15)
+        .onTapGesture {
+            self.thoughtListVM.selectedThoughtCellVM = thoughtCellVM
+            self.thoughtListVM.showSheet = true
         }
     }
 }
