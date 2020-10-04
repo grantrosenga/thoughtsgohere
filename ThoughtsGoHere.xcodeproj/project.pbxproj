@@ -19,6 +19,7 @@
 		04ADF4DC2527FFF500390033 /* ThoughtsGoHereUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADF4DB2527FFF500390033 /* ThoughtsGoHereUITests.swift */; };
 		04ADF4ED2528004D00390033 /* MainThoughtsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADF4EC2528004D00390033 /* MainThoughtsView.swift */; };
 		04ADF4F225280ED900390033 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADF4F125280ED900390033 /* Colors.swift */; };
+		04ECF2B7252A7B1B005CF585 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04ECF2B6252A7B1B005CF585 /* Launch Screen.storyboard */; };
 		148B62C2646FACDC398C80A1 /* Pods_ThoughtsGoHereTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA06E24A8EDA03BB6ADFFA6 /* Pods_ThoughtsGoHereTests.framework */; };
 		82DBD0BDF19B653329BCF515 /* Pods_ThoughtsGoHere_ThoughtsGoHereUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56836F4A21D28ED105E0792A /* Pods_ThoughtsGoHere_ThoughtsGoHereUITests.framework */; };
 		D27C59A0C473C670330E55DB /* Pods_ThoughtsGoHere.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09AB804F38D24DBFE032C177 /* Pods_ThoughtsGoHere.framework */; };
@@ -60,6 +61,7 @@
 		04ADF4DD2527FFF500390033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04ADF4EC2528004D00390033 /* MainThoughtsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainThoughtsView.swift; sourceTree = "<group>"; };
 		04ADF4F125280ED900390033 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		04ECF2B6252A7B1B005CF585 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		09AB804F38D24DBFE032C177 /* Pods_ThoughtsGoHere.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThoughtsGoHere.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AB4C4DC55653C50C4232491 /* Pods-ThoughtsGoHereTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThoughtsGoHereTests.debug.xcconfig"; path = "Target Support Files/Pods-ThoughtsGoHereTests/Pods-ThoughtsGoHereTests.debug.xcconfig"; sourceTree = "<group>"; };
 		56836F4A21D28ED105E0792A /* Pods_ThoughtsGoHere_ThoughtsGoHereUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThoughtsGoHere_ThoughtsGoHereUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +152,7 @@
 				04ADF4C22527FFF500390033 /* Assets.xcassets */,
 				04ADF4C72527FFF500390033 /* Info.plist */,
 				04ADF4C42527FFF500390033 /* Preview Content */,
+				04ECF2B6252A7B1B005CF585 /* Launch Screen.storyboard */,
 			);
 			path = ThoughtsGoHere;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 			files = (
 				04ADF4C62527FFF500390033 /* Preview Assets.xcassets in Resources */,
 				04ADF4C32527FFF500390033 /* Assets.xcassets in Resources */,
+				04ECF2B7252A7B1B005CF585 /* Launch Screen.storyboard in Resources */,
 				049358052528F21F009CD3D8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

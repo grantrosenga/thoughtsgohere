@@ -14,64 +14,120 @@ struct MainThoughtsView: View {
     let thoughts = testThoughts
     
     @State var showNewThought = false
+    @State private var isRotated = false
+    
+    var animation: Animation {
+        Animation.easeInOut(duration: 5)
+            .repeatForever(autoreverses: false)
+    }
+    
+    var animation2: Animation {
+        Animation.linear(duration: 5)
+            .repeatForever(autoreverses: false)
+    }
     
     var body: some View {
         
         VStack {
-            HStack {
-                Button(action: {
-                    withAnimation {
-                        self.thoughtListVM.inEditMode.toggle()
-                    }
-                }){
-                    Text(self.thoughtListVM.inEditMode ? "done" : "edit")
-                        .padding([.vertical, .trailing])
-                }
-                Spacer()
-                Button(action: {
-                    NSLog("New note created")
-                    let newThoughtModel = ThoughtCellViewModel(thought: Thought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody))
-                    self.thoughtListVM.thoughtCellVMs.append(newThoughtModel)
-                    self.thoughtListVM.selectedThoughtCellVM = newThoughtModel
-                    self.thoughtListVM.showSheet = true
-                }) {
-                    Image(systemName: "square.and.pencil").font(.system(size: 30.0))
-                }
-            }
-            HStack {
-                Text("Thoughts").font(.largeTitle).bold()
-                Spacer()
-            }
-            ScrollView {
-                ForEach(thoughtListVM.thoughtCellVMs) { thoughtCellVM in
+            ZStack {
+                VStack {
                     HStack {
-                        ThoughtCell(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtCellVM)
-                            .clipped()
-                            .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 0)
-                            .padding(.bottom, 5)
                         
-                        if self.thoughtListVM.inEditMode {
-                            Button(action: {
-                                NSLog("Deleted thought: \(thoughtCellVM.thought.title)")
-                                withAnimation {
-                                    self.thoughtListVM.deleteItem(element: thoughtCellVM)
-                                }
-                            }) {
-                                Image(systemName: "trash.fill").font(.title).foregroundColor(Color.red.opacity(0.8))
-                                    .padding()
+                        Button(action: {
+                            withAnimation {
+                                self.thoughtListVM.inEditMode.toggle()
                             }
+                        }){
+                            ZStack {
+                                Text(self.thoughtListVM.inEditMode ? "done" : "edit")
+                                    .padding([.vertical, .trailing])
+                                    .padding(.leading, 15)
+                                    .zIndex(5)
+                                
+                                Image("thoughts-logo-cloud")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 75)
+                                    .clipped()
+                                    .shadow(color: Color.black.opacity(0.2), radius: 2, x: 2, y: 1)
+                                    .zIndex(3)
+                            }
+                        }.foregroundColor(offWhite)
+                        
+                        Spacer()
+                        Button(action: {
+                            NSLog("New note created")
+                            let newThoughtModel = ThoughtCellViewModel(thought: Thought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody))
+                            self.thoughtListVM.thoughtCellVMs.append(newThoughtModel)
+                            self.thoughtListVM.selectedThoughtCellVM = newThoughtModel
+                            self.thoughtListVM.showSheet = true
+                        }) {
+                            Image(systemName: "square.and.pencil").font(.system(size: 30.0))
                         }
                     }
+                    
+                    HStack {
+                        Text("Thoughts").font(.system(size: 25)).bold()
+                        Spacer()
+                    }
+                    
+                    ScrollView {
+                        ForEach(thoughtListVM.thoughtCellVMs) { thoughtCellVM in
+                            HStack {
+                                ThoughtCell(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtCellVM)
+                                    .clipped()
+                                    .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 0)
+                                    .padding(.bottom, 5)
+                                
+                                if self.thoughtListVM.inEditMode {
+                                    Button(action: {
+                                        NSLog("Deleted thought: \(thoughtCellVM.thought.title)")
+                                        withAnimation {
+                                            self.thoughtListVM.deleteItem(element: thoughtCellVM)
+                                        }
+                                    }) {
+                                        Image(systemName: "trash.fill").font(.title).foregroundColor(Color.red.opacity(0.8))
+                                            .padding()
+                                    }
+                                }
+                            }
+                        }
+                    }.background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
+                    .cornerRadius(15)
+                }.zIndex(3)
+                .padding(.top)
+                
+                VStack {
+                    ZStack {
+                        Image("thoughts-logo-flares")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 100)
+                            .rotationEffect(Angle.degrees(isRotated ? 360 : 0))
+                            .animation(animation2)
+                        Image("thoughts-logo-flares")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150)
+                            .rotationEffect(Angle.degrees(isRotated ? 360 : 0))
+                            .animation(animation)
+                        Image(systemName: "lightbulb.fill").foregroundColor(Color.black)
+                            .font(.system(size: 30))
+                    }
+                    Spacer()
                 }
+                .zIndex(2)
             }
         }
         .foregroundColor(offBlack)
         .padding(.horizontal)
-        .padding(.top, 30)
         .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
         .sheet(isPresented: self.$thoughtListVM.showSheet) {
             ThoughtDetail(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtListVM.selectedThoughtCellVM ?? ThoughtCellViewModel(thought: Thought(title: "", body: "")))
                 .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
+        }
+        .onAppear() {
+            self.isRotated = true
         }
     }
 }
