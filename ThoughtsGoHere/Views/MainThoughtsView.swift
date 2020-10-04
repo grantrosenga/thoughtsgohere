@@ -28,16 +28,12 @@ struct MainThoughtsView: View {
             .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
             .navigationTitle("Thoughts")
             .navigationBarItems(trailing:
-                                    
                                     Button(action: {
                                         NSLog("New note created")
-                                        //self.showNewThought.toggle()
-                                        self.thoughtListVM.thoughtCellVMs.append(ThoughtCellViewModel(thought: Thought(title: "-untitled-", body: "")))
-                                        self.thoughtListVM.selectedThoughtCellVM =
-                                            ThoughtCellViewModel(thought: Thought(title: "", body: ""))
-                                            
+                                        let newThoughtModel = ThoughtCellViewModel(thought: Thought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody))
+                                        self.thoughtListVM.thoughtCellVMs.append(newThoughtModel)
+                                        self.thoughtListVM.selectedThoughtCellVM = newThoughtModel
                                         self.thoughtListVM.showSheet = true
-                                        
                                     }) {
                                         Image(systemName: "square.and.pencil").font(.system(size: 30.0))
                                     }
@@ -45,6 +41,7 @@ struct MainThoughtsView: View {
         }.foregroundColor(Color.black)
         .sheet(isPresented: self.$thoughtListVM.showSheet) {
             ThoughtDetail(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtListVM.selectedThoughtCellVM ?? ThoughtCellViewModel(thought: Thought(title: "", body: "")))
+                .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
         }
     }
 }
@@ -56,38 +53,47 @@ struct ThoughtDetail : View {
     
     var body: some View {
         
-        VStack {
-            
-            HStack {
-                TextField("thought title...", text: self.$thoughtCellVM.thought.title)
-                    .font(.system(size: 30, weight: .heavy, design: .default))
-                    .padding(.leading)
-                Spacer()
-                Button(action: {
-                    self.thoughtListVM.showSheet = false
-                    self.thoughtListVM.selectedThoughtCellVM = nil
-                }) {
-                    Text("done")
-                        .foregroundColor(.blue)
-                        .font(.system(size: 20))
-                        .padding()
-                }
-            }
-            
-            TextEditor(text: self.$thoughtCellVM.thought.body)
-                .font(.system(size: 15))
-                .foregroundColor(Color.black)
-                .padding()
-                //.disabled(isEditing)
-                .background(Color.white.opacity(0.6))
-                .cornerRadius(10)
-                .clipped()
-                .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 0)
+        GeometryReader {geometry in
+            VStack {
+                HStack(alignment: .center) {
+                    Image(systemName: "doc.plaintext").font(.system(size: 40)).foregroundColor(offBlack)
+                    TextField("New thought", text: self.$thoughtCellVM.thought.title)
+                        .font(.system(size: 30, weight: .heavy, design: .default))
+                        .padding(.leading, 5)
+                    Spacer()
+                    
+                    Button(action: {
+                        self.thoughtListVM.showSheet = false
+                        self.thoughtListVM.selectedThoughtCellVM = nil
+                    }) {
+                        Text("D O N E")
+                            .foregroundColor(.blue)
+                            .font(.system(size: 15))
+                            .bold()
+                            .padding(5)
+                            .background(Color.white.opacity(0.5))
+                            .cornerRadius(10)
+                            .clipped()
+                            .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 0)
+                    }
+                }.padding()
+                .padding(.top)
                 
-            Spacer()
+                HStack {
+                    TextEditor(text: self.$thoughtCellVM.thought.body)
+                        .font(.system(size: 20))
+                        .foregroundColor(Color.black.opacity(0.5))
+                    Spacer()
+                }
+                .padding()
+                .background(Color.white.opacity(0.65))
+                .padding(.horizontal)
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .background(Color.white.opacity(0.5))
             
-        }.padding([.top, .horizontal])
-        .background(peach).edgesIgnoringSafeArea(.all)
+        }
+        
     }
 }
 
@@ -98,11 +104,32 @@ struct ThoughtCell: View {
     
     var body: some View {
         
-        HStack {
-            Image(systemName: "doc.text.viewfinder").font(.largeTitle)
-            Text(thoughtCellVM.thought.title)
-            Spacer()
-        }.padding()
+        VStack {
+            HStack {
+                Image(systemName: "doc.plaintext").font(.system(size: 40)).foregroundColor(offBlack)
+                if thoughtCellVM.thought.title != "" {
+                    Text(thoughtCellVM.thought.title).foregroundColor(Color.black)
+                        .font(.system(size: 30, weight: .heavy, design: .default))
+                        .padding(.leading, 5)
+                } else {
+                    Text("New thought").foregroundColor(Color.secondary)
+                        .font(.title).bold()
+                        .font(.system(size: 30, weight: .heavy, design: .default))
+                        .padding(.leading, 5)
+                }
+                Spacer()
+            }.padding()
+            
+            HStack {
+                Text(thoughtCellVM.thought.body)
+                    .font(.subheadline)
+                    .foregroundColor(Color.secondary)
+                    .lineLimit(1)
+                Spacer()
+            }.padding()
+            .background(Color.white.opacity(0.65))
+            .cornerRadius(15, corners: [.bottomLeft, .bottomRight])
+        }
         .background(Color.white.opacity(0.5))
         .cornerRadius(15)
         .onTapGesture {
