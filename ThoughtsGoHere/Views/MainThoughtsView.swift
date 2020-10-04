@@ -17,6 +17,7 @@ struct MainThoughtsView: View {
     
     var body: some View {
         
+<<<<<<< HEAD
         VStack {
             HStack {
             	Button(action: {
@@ -55,15 +56,78 @@ struct MainThoughtsView: View {
                                 NSLog("Deleted thought: \(thoughtCellVM.thought.title)")
                                 withAnimation {
                                     self.thoughtListVM.deleteItem(element: thoughtCellVM)
+=======
+        GeometryReader { geometry in
+            ZStack {
+                
+                NavigationView {
+                    
+                    ScrollView {
+                        ForEach(thoughtListVM.thoughtCellVMs) { thoughtCellVM in
+                            HStack {
+                                ThoughtCell(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtCellVM)
+                                    .clipped()
+                                    .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 0)
+                                    .padding(.bottom, 5)
+                                
+                                if self.thoughtListVM.inEditMode {
+                                    Button(action: {
+                                        NSLog("Deleted thought: \(thoughtCellVM.thought.title)")
+                                        withAnimation {
+                                            self.thoughtListVM.deleteItem(element: thoughtCellVM)
+                                        }
+                                    }) {
+                                        Image(systemName: "trash.fill").font(.title).foregroundColor(Color.red.opacity(0.8))
+                                            .padding()
+                                    }
+>>>>>>> Imported logo, still needs work on placement
                                 }
-                            }) {
-                                Image(systemName: "trash.fill").font(.title).foregroundColor(Color.red.opacity(0.8))
-                                    .padding()
                             }
                         }
-                    }
+                    }.zIndex(2)
+                    .padding(.horizontal)
+                    .padding(.top, 120)
+                    .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
+                    .navigationTitle("Thoughts").foregroundColor(offBlack)
+                    .navigationBarItems(leading:
+                                            Button(action: {
+                                                withAnimation {
+                                                    self.thoughtListVM.inEditMode.toggle()
+                                                }
+                                            }){
+                                                Text(self.thoughtListVM.inEditMode ? "done" : "edit")
+                                                    .padding([.vertical, .trailing])
+                                            }, trailing:
+                                                Button(action: {
+                                                    NSLog("New note created")
+                                                    let newThoughtModel = ThoughtCellViewModel(thought: Thought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody))
+                                                    self.thoughtListVM.thoughtCellVMs.append(newThoughtModel)
+                                                    self.thoughtListVM.selectedThoughtCellVM = newThoughtModel
+                                                    self.thoughtListVM.showSheet = true
+                                                }) {
+                                                    Image(systemName: "square.and.pencil").font(.system(size: 25.0))
+                                                        .padding([.vertical, .leading])
+                                                }
+                    )
+                }
+                .foregroundColor(offBlack)
+                
+                VStack {
+                    Image("thoughts-logo-square").resizable().aspectRatio(contentMode: .fit)
+                        .frame(width: geometry.size.width / 2, height: geometry.size.width / 2)
+                        .zIndex(1)
+                        .opacity(0.1)
+                        .clipped()
+                        .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 0)
+                    Spacer()
+                }
+                .padding()
+                .sheet(isPresented: self.$thoughtListVM.showSheet) {
+                    ThoughtDetail(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtListVM.selectedThoughtCellVM ?? ThoughtCellViewModel(thought: Thought(title: "", body: "")))
+                        .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
                 }
             }
+<<<<<<< HEAD
         }
         .foregroundColor(offBlack)
         .padding(.horizontal)
@@ -72,6 +136,8 @@ struct MainThoughtsView: View {
         .sheet(isPresented: self.$thoughtListVM.showSheet) {
             ThoughtDetail(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtListVM.selectedThoughtCellVM ?? ThoughtCellViewModel(thought: Thought(title: "", body: "")))
                 .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
+=======
+>>>>>>> Imported logo, still needs work on placement
         }
     }
 }
