@@ -14,6 +14,7 @@ class ThoughtListViewModel: ObservableObject {
     @Published var selectedThoughtCellVM: ThoughtCellViewModel?
     @Published var newThoughtTitle = ""
     @Published var newThoughtBody = ""
+    @Published var inEditMode = false
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -21,5 +22,9 @@ class ThoughtListViewModel: ObservableObject {
         self.thoughtCellVMs = testThoughts.map { thought in
             ThoughtCellViewModel(thought: thought)
         }
+    }
+    
+    func deleteItem(element: ThoughtCellViewModel) {
+        thoughtCellVMs = thoughtCellVMs.filter() { $0 !== element }
     }
 }

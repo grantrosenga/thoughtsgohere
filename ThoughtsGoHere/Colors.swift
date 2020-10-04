@@ -16,6 +16,8 @@ let darkBlue = Color(red: 147/255, green: 129/255, blue: 255/255)
 
 let gradientOrangeBlue = LinearGradient(gradient: Gradient(colors: [lightBlue, lightOrange]), startPoint: .topLeading, endPoint: .bottomTrailing)
 
+let gradientOffWhite = LinearGradient(gradient: Gradient(colors: [offWhite, lightOrange]), startPoint: .topLeading, endPoint: .bottomTrailing)
+
 extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
