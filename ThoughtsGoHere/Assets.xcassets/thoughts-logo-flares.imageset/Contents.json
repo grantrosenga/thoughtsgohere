@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ThoughtsGoHereLogo.png",
+      "filename" : "1thoughts-logo-flares.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "1thoughts-logo-flares@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "1thoughts-logo-flares@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

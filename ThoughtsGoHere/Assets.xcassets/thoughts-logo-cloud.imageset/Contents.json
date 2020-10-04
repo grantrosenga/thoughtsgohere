@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "1thoughtsgohere-square.png",
+      "filename" : "1thoughts-logo-cloud.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "1thoughtsgohere-square@2x.png",
+      "filename" : "1thoughts-logo-cloud@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "1thoughtsgohere-square@3x.png",
+      "filename" : "1thoughts-logo-cloud@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
