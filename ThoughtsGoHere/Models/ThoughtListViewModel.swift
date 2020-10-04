@@ -10,6 +10,10 @@ import Combine
 
 class ThoughtListViewModel: ObservableObject {
     @Published var thoughtCellVMs = [ThoughtCellViewModel]()
+    @Published var showSheet = false
+    @Published var selectedThoughtCellVM: ThoughtCellViewModel?
+    @Published var newThoughtTitle = ""
+    @Published var newThoughtBody = ""
     
     private var cancellables = Set<AnyCancellable>()
     
