@@ -17,28 +17,33 @@ struct MainThoughtsView: View {
     
     var body: some View {
         
-        NavigationView {
+        VStack {
+            HStack {
+                Spacer()
+                Button(action: {
+                    NSLog("New note created")
+                    let newThoughtModel = ThoughtCellViewModel(thought: Thought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody))
+                    self.thoughtListVM.thoughtCellVMs.append(newThoughtModel)
+                    self.thoughtListVM.selectedThoughtCellVM = newThoughtModel
+                    self.thoughtListVM.showSheet = true
+                }) {
+                    Image(systemName: "square.and.pencil").font(.system(size: 30.0))
+                }
+            }
+            HStack {
+                Text("Thoughts").font(.largeTitle).bold()
+                Spacer()
+            }
             ScrollView {
                 ForEach(thoughtListVM.thoughtCellVMs) { thoughtCellVM in
                     ThoughtCell(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtCellVM)
                 }
             }
-            .padding(.horizontal)
-            .padding(.top, 120)
-            .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
-            .navigationTitle("Thoughts")
-            .navigationBarItems(trailing:
-                                    Button(action: {
-                                        NSLog("New note created")
-                                        let newThoughtModel = ThoughtCellViewModel(thought: Thought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody))
-                                        self.thoughtListVM.thoughtCellVMs.append(newThoughtModel)
-                                        self.thoughtListVM.selectedThoughtCellVM = newThoughtModel
-                                        self.thoughtListVM.showSheet = true
-                                    }) {
-                                        Image(systemName: "square.and.pencil").font(.system(size: 30.0))
-                                    }
-            )
-        }.foregroundColor(Color.black)
+        }
+        .foregroundColor(offBlack)
+        .padding(.horizontal)
+        .padding(.top, 30)
+        .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
         .sheet(isPresented: self.$thoughtListVM.showSheet) {
             ThoughtDetail(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtListVM.selectedThoughtCellVM ?? ThoughtCellViewModel(thought: Thought(title: "", body: "")))
                 .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
