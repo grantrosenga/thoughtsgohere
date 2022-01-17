@@ -6,13 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct Thought: Identifiable {
+struct Thought: Codable, Identifiable {
     var id: String = UUID().uuidString
-    var title : String
-    var body : String
+    var title: String?
+    var body: String?
 }
 
+/*
 #if DEBUG
 let testThoughts = [
     Thought(title: "test", body: "this is a test"),
@@ -20,3 +22,4 @@ let testThoughts = [
     Thought(title: "test2", body: "this is a test2")
 ]
 #endif
+*/

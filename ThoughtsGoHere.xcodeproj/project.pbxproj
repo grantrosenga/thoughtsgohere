@@ -3,14 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		040C9DE025290865005CA14A /* Thought.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040C9DDF25290865005CA14A /* Thought.swift */; };
 		040C9E0525290E8D005CA14A /* ThoughtListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040C9E0425290E8D005CA14A /* ThoughtListViewModel.swift */; };
 		040C9E10252910EF005CA14A /* ThoughtCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040C9E0F252910EF005CA14A /* ThoughtCellViewModel.swift */; };
-		049358052528F21F009CD3D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 049358042528F21F009CD3D8 /* GoogleService-Info.plist */; };
 		04ADF4BF2527FFF400390033 /* ThoughtsGoHereApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADF4BE2527FFF400390033 /* ThoughtsGoHereApp.swift */; };
 		04ADF4C12527FFF400390033 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADF4C02527FFF400390033 /* ContentView.swift */; };
 		04ADF4C32527FFF500390033 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04ADF4C22527FFF500390033 /* Assets.xcassets */; };
@@ -20,6 +19,7 @@
 		04ADF4ED2528004D00390033 /* MainThoughtsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADF4EC2528004D00390033 /* MainThoughtsView.swift */; };
 		04ADF4F225280ED900390033 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADF4F125280ED900390033 /* Colors.swift */; };
 		04ECF2B7252A7B1B005CF585 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04ECF2B6252A7B1B005CF585 /* Launch Screen.storyboard */; };
+		0749B0632794A6D100C70142 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0749B0622794A6D100C70142 /* GoogleService-Info.plist */; };
 		148B62C2646FACDC398C80A1 /* Pods_ThoughtsGoHereTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA06E24A8EDA03BB6ADFFA6 /* Pods_ThoughtsGoHereTests.framework */; };
 		82DBD0BDF19B653329BCF515 /* Pods_ThoughtsGoHere_ThoughtsGoHereUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56836F4A21D28ED105E0792A /* Pods_ThoughtsGoHere_ThoughtsGoHereUITests.framework */; };
 		D27C59A0C473C670330E55DB /* Pods_ThoughtsGoHere.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09AB804F38D24DBFE032C177 /* Pods_ThoughtsGoHere.framework */; };
@@ -62,6 +62,7 @@
 		04ADF4EC2528004D00390033 /* MainThoughtsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainThoughtsView.swift; sourceTree = "<group>"; };
 		04ADF4F125280ED900390033 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		04ECF2B6252A7B1B005CF585 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		0749B0622794A6D100C70142 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09AB804F38D24DBFE032C177 /* Pods_ThoughtsGoHere.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThoughtsGoHere.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AB4C4DC55653C50C4232491 /* Pods-ThoughtsGoHereTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThoughtsGoHereTests.debug.xcconfig"; path = "Target Support Files/Pods-ThoughtsGoHereTests/Pods-ThoughtsGoHereTests.debug.xcconfig"; sourceTree = "<group>"; };
 		56836F4A21D28ED105E0792A /* Pods_ThoughtsGoHere_ThoughtsGoHereUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThoughtsGoHere_ThoughtsGoHereUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +146,7 @@
 		04ADF4BD2527FFF400390033 /* ThoughtsGoHere */ = {
 			isa = PBXGroup;
 			children = (
+				0749B0622794A6D100C70142 /* GoogleService-Info.plist */,
 				040C9DE42529092B005CA14A /* Views */,
 				040C9DDE2529083E005CA14A /* Models */,
 				04ADF4BE2527FFF400390033 /* ThoughtsGoHereApp.swift */,
@@ -218,6 +220,7 @@
 				04ADF4B72527FFF400390033 /* Sources */,
 				04ADF4B82527FFF400390033 /* Frameworks */,
 				04ADF4B92527FFF400390033 /* Resources */,
+				BC7CD00826357241FAC83F5D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -255,6 +258,7 @@
 				04ADF4D32527FFF500390033 /* Sources */,
 				04ADF4D42527FFF500390033 /* Frameworks */,
 				04ADF4D52527FFF500390033 /* Resources */,
+				682FAC0266C7627A337DB958 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -315,8 +319,8 @@
 			files = (
 				04ADF4C62527FFF500390033 /* Preview Assets.xcassets in Resources */,
 				04ADF4C32527FFF500390033 /* Assets.xcassets in Resources */,
+				0749B0632794A6D100C70142 /* GoogleService-Info.plist in Resources */,
 				04ECF2B7252A7B1B005CF585 /* Launch Screen.storyboard in Resources */,
-				049358052528F21F009CD3D8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +363,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		682FAC0266C7627A337DB958 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ThoughtsGoHere-ThoughtsGoHereUITests/Pods-ThoughtsGoHere-ThoughtsGoHereUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ThoughtsGoHere-ThoughtsGoHereUITests/Pods-ThoughtsGoHere-ThoughtsGoHereUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ThoughtsGoHere-ThoughtsGoHereUITests/Pods-ThoughtsGoHere-ThoughtsGoHereUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9F05C764A77328B2E93F3A53 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -379,6 +400,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BC7CD00826357241FAC83F5D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ThoughtsGoHere/Pods-ThoughtsGoHere-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ThoughtsGoHere/Pods-ThoughtsGoHere-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ThoughtsGoHere/Pods-ThoughtsGoHere-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F40C0D5A7953F969C059609E /* [CP] Check Pods Manifest.lock */ = {

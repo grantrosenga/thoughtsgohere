@@ -6,6 +6,9 @@ target 'ThoughtsGoHere' do
   use_frameworks!
 
   # Pods for ThoughtsGoHere
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
 
   target 'ThoughtsGoHereTests' do
     inherit! :search_paths

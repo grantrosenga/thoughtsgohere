@@ -11,10 +11,11 @@ struct MainThoughtsView: View {
     
     @ObservedObject var thoughtListVM = ThoughtListViewModel()
     
-    let thoughts = testThoughts
+    //let thoughts = testThoughts
     
     @State var showNewThought = false
     @State private var isRotated = false
+    var newThought = Thought(title: "", body: "")
     
     var animation: Animation {
         Animation.easeInOut(duration: 5)
@@ -32,34 +33,28 @@ struct MainThoughtsView: View {
             ZStack {
                 VStack {
                     HStack {
-                        
                         Button(action: {
                             withAnimation {
                                 self.thoughtListVM.inEditMode.toggle()
                             }
                         }){
-                            ZStack {
-                                Text(self.thoughtListVM.inEditMode ? "done" : "edit")
-                                    .padding([.vertical, .trailing])
-                                    .padding(.leading, 15)
-                                    .zIndex(5)
-                                
-                                Image("thoughts-logo-cloud")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 75)
-                                    .clipped()
-                                    .shadow(color: Color.black.opacity(0.2), radius: 2, x: 2, y: 1)
-                                    .zIndex(3)
-                            }
+                            Text(self.thoughtListVM.inEditMode ? "done" : "edit")
+                                .padding([.vertical, .trailing])
+                                .padding(.leading, 15)
                         }.foregroundColor(offWhite)
                         
                         Spacer()
                         Button(action: {
                             NSLog("New note created")
+                            /*
                             let newThoughtModel = ThoughtCellViewModel(thought: Thought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody))
                             self.thoughtListVM.thoughtCellVMs.append(newThoughtModel)
                             self.thoughtListVM.selectedThoughtCellVM = newThoughtModel
+                            self.thoughtListVM.showSheet = true
+                            */
+                            /*
+                            self.thoughtListVM.addThought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody)
+                             */
                             self.thoughtListVM.showSheet = true
                         }) {
                             Image(systemName: "square.and.pencil").font(.system(size: 30.0))
@@ -72,6 +67,7 @@ struct MainThoughtsView: View {
                     }
                     
                     ScrollView {
+                        /*
                         ForEach(thoughtListVM.thoughtCellVMs) { thoughtCellVM in
                             HStack {
                                 ThoughtCell(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtCellVM)
@@ -84,6 +80,30 @@ struct MainThoughtsView: View {
                                         NSLog("Deleted thought: \(thoughtCellVM.thought.title)")
                                         withAnimation {
                                             self.thoughtListVM.deleteItem(element: thoughtCellVM)
+                                        }
+                                    }) {
+                                        Image(systemName: "trash.fill").font(.title).foregroundColor(Color.red.opacity(0.8))
+                                            .padding()
+                                    }
+                                }
+                            }
+                        }
+                        */
+                        ForEach(self.thoughtListVM.thoughts) { thought in
+                        //ForEach(self.thoughtListVM.thoughts.indices, id: \.self) { thought in
+                            HStack {
+                            ThoughtCell(thoughtListVM: self.thoughtListVM, thought: thought)
+                                .clipped()
+                                .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 0)
+                                .padding(.bottom, 5)
+                                
+                                if self.thoughtListVM.inEditMode {
+                                    Button(action: {
+                                        NSLog("Deleted thought: \(thought.title)")
+                                        withAnimation {
+                                            self.thoughtListVM.deleteThought(thought: thought)
+                                            //self.thoughtListVM.thoughts.remove(at: self.thoughtListVM.thoughts)
+                                            self.thoughtListVM.fetchData()
                                         }
                                     }) {
                                         Image(systemName: "trash.fill").font(.title).foregroundColor(Color.red.opacity(0.8))
@@ -122,10 +142,13 @@ struct MainThoughtsView: View {
         .foregroundColor(offBlack)
         .padding(.horizontal)
         .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
+        
+        
         .sheet(isPresented: self.$thoughtListVM.showSheet) {
-            ThoughtDetail(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtListVM.selectedThoughtCellVM ?? ThoughtCellViewModel(thought: Thought(title: "", body: "")))
+            ThoughtDetail(thoughtListVM: self.thoughtListVM, thought: self.newThought)
                 .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
         }
+        
         .onAppear() {
             self.isRotated = true
         }
@@ -135,7 +158,7 @@ struct MainThoughtsView: View {
 struct ThoughtDetail : View {
     
     @ObservedObject var thoughtListVM : ThoughtListViewModel
-    @ObservedObject var thoughtCellVM : ThoughtCellViewModel
+    @State var thought: Thought
     
     var body: some View {
         
@@ -143,13 +166,16 @@ struct ThoughtDetail : View {
             VStack {
                 HStack(alignment: .center) {
                     
-                    TextField("New thought", text: self.$thoughtCellVM.thought.title)
+                    TextField("New thought", text: self.$thoughtListVM.newThoughtTitle)
                         .font(.system(size: 30))
                     Spacer()
                     
                     Button(action: {
+                        self.thoughtListVM.addThought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody)
                         self.thoughtListVM.showSheet = false
+                        /*
                         self.thoughtListVM.selectedThoughtCellVM = nil
+                        */
                     }) {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(offBlack)
@@ -162,7 +188,7 @@ struct ThoughtDetail : View {
                 ZStack {
                     Image(systemName: "lightbulb").font(.system(size: 60)).foregroundColor(offBlack).opacity(0.1)
                     HStack {
-                        TextEditor(text: self.$thoughtCellVM.thought.body)
+                        TextEditor(text: self.$thoughtListVM.newThoughtBody)
                             .font(.system(size: 20))
                             .foregroundColor(Color.black.opacity(0.65))
                             .padding(.leading, 5)
@@ -185,15 +211,15 @@ struct ThoughtDetail : View {
 struct ThoughtCell: View {
     
     @ObservedObject var thoughtListVM : ThoughtListViewModel
-    @ObservedObject var thoughtCellVM : ThoughtCellViewModel
+    @State var thought: Thought
     
     var body: some View {
         
         VStack {
             
             HStack {
-                if thoughtCellVM.thought.title != "" {
-                    Text(thoughtCellVM.thought.title).foregroundColor(offBlack)
+                if self.thought.title != "" {
+                    Text(self.thought.title ?? "").foregroundColor(offBlack)
                         .font(.system(size: 30))
                 } else {
                     Text("New thought").foregroundColor(Color.secondary)
@@ -206,7 +232,7 @@ struct ThoughtCell: View {
             .padding(.vertical, 10)
             
             HStack {
-                Text(thoughtCellVM.thought.body)
+                Text(self.thought.body ?? "")
                     .font(.subheadline)
                     .foregroundColor(Color.secondary)
                     .lineLimit(1)
@@ -218,7 +244,7 @@ struct ThoughtCell: View {
         .background(Color.white.opacity(0.5))
         .cornerRadius(15)
         .onTapGesture {
-            self.thoughtListVM.selectedThoughtCellVM = thoughtCellVM
+            //self.thoughtListVM.selectedThoughtCellVM = thoughtCellVM
             self.thoughtListVM.showSheet = true
         }
     }

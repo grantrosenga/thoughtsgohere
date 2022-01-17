@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct ThoughtsGoHereApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
         WindowGroup {
@@ -17,4 +20,12 @@ struct ThoughtsGoHereApp: App {
     }
 }
 
-
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var window: UIWindow?
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
+}
