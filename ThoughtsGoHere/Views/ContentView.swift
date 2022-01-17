@@ -15,7 +15,7 @@ struct ContentView: View {
     
     var body: some View {
         
-        MainThoughtsView()
+        MainThoughtsView().navigationBarHidden(true).edgesIgnoringSafeArea(.all)
     }
 }
 

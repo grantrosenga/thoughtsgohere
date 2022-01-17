@@ -17,21 +17,13 @@ struct MainThoughtsView: View {
     @State private var isRotated = false
     var newThought = Thought(title: "", body: "")
     
-    var animation: Animation {
-        Animation.easeInOut(duration: 5)
-            .repeatForever(autoreverses: false)
-    }
-    
-    var animation2: Animation {
-        Animation.linear(duration: 5)
-            .repeatForever(autoreverses: false)
-    }
-    
     var body: some View {
         
+        NavigationView {
         VStack {
             ZStack {
                 VStack {
+                    /*
                     HStack {
                         Button(action: {
                             withAnimation {
@@ -46,74 +38,26 @@ struct MainThoughtsView: View {
                         Spacer()
                         Button(action: {
                             NSLog("New note created")
-                            /*
-                            let newThoughtModel = ThoughtCellViewModel(thought: Thought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody))
-                            self.thoughtListVM.thoughtCellVMs.append(newThoughtModel)
-                            self.thoughtListVM.selectedThoughtCellVM = newThoughtModel
-                            self.thoughtListVM.showSheet = true
-                            */
-                            /*
-                            self.thoughtListVM.addThought(title: self.thoughtListVM.newThoughtTitle, body: self.thoughtListVM.newThoughtBody)
-                             */
                             self.thoughtListVM.showSheet = true
                         }) {
                             Image(systemName: "square.and.pencil").font(.system(size: 30.0))
                         }
                     }
-                    
+                    */
+                    /*
                     HStack {
                         Text("Thoughts").font(.system(size: 25)).bold()
                         Spacer()
                     }
+                    */
                     
-                    ScrollView {
-                        /*
-                        ForEach(thoughtListVM.thoughtCellVMs) { thoughtCellVM in
-                            HStack {
-                                ThoughtCell(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtCellVM)
-                                    .clipped()
-                                    .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 0)
-                                    .padding(.bottom, 5)
-                                
-                                if self.thoughtListVM.inEditMode {
-                                    Button(action: {
-                                        NSLog("Deleted thought: \(thoughtCellVM.thought.title)")
-                                        withAnimation {
-                                            self.thoughtListVM.deleteItem(element: thoughtCellVM)
-                                        }
-                                    }) {
-                                        Image(systemName: "trash.fill").font(.title).foregroundColor(Color.red.opacity(0.8))
-                                            .padding()
-                                    }
-                                }
-                            }
-                        }
-                        */
+                    
+                    List {
                         ForEach(self.thoughtListVM.thoughts) { thought in
-                        //ForEach(self.thoughtListVM.thoughts.indices, id: \.self) { thought in
-                            HStack {
-                            ThoughtCell(thoughtListVM: self.thoughtListVM, thought: thought)
-                                .clipped()
-                                .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 0)
-                                .padding(.bottom, 5)
-                                
-                                if self.thoughtListVM.inEditMode {
-                                    Button(action: {
-                                        NSLog("Deleted thought: \(thought.title)")
-                                        withAnimation {
-                                            self.thoughtListVM.deleteThought(thought: thought)
-                                            //self.thoughtListVM.thoughts.remove(at: self.thoughtListVM.thoughts)
-                                            self.thoughtListVM.fetchData()
-                                        }
-                                    }) {
-                                        Image(systemName: "trash.fill").font(.title).foregroundColor(Color.red.opacity(0.8))
-                                            .padding()
-                                    }
-                                }
-                            }
+                            Text(thought.title ?? "")
                         }
-                    }.background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
-                    .cornerRadius(15)
+                    }
+                    
                 }.zIndex(3)
                 .padding(.top)
                 
@@ -123,14 +67,10 @@ struct MainThoughtsView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 100)
-                            .rotationEffect(Angle.degrees(isRotated ? 360 : 0))
-                            .animation(animation2)
                         Image("thoughts-logo-flares")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 150)
-                            .rotationEffect(Angle.degrees(isRotated ? 360 : 0))
-                            .animation(animation)
                         Image(systemName: "lightbulb.fill").foregroundColor(Color.black)
                             .font(.system(size: 30))
                     }
@@ -140,10 +80,9 @@ struct MainThoughtsView: View {
             }
         }
         .foregroundColor(offBlack)
-        .padding(.horizontal)
-        .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
-        
-        
+        //.background(gradientOrangeBlue)
+        .navigationTitle("Thoughts")
+        }
         .sheet(isPresented: self.$thoughtListVM.showSheet) {
             ThoughtDetail(thoughtListVM: self.thoughtListVM, thought: self.newThought)
                 .background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
