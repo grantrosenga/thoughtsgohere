@@ -29,19 +29,25 @@ class ThoughtListViewModel: ObservableObject {
         }
     }
     */
+    
     init() {
         self.fetchData()
     }
     
     
+    func deleteItem(element: ThoughtCellViewModel) {
+            thoughtCellVMs = thoughtCellVMs.filter() { $0 !== element }
+        }
+    
     func deleteThought(thought: Thought) {
         //thoughtCellVMs = thoughtCellVMs.filter() { $0 !== element }
+        
         db.collection("thoughts").document(thought.id).delete() { err in
             if let err = err {
               print("Error removing document: \(err)")
             }
             else {
-                self.fetchData()
+                //self.fetchData()
             
               print("Document successfully removed!")
             }
@@ -57,12 +63,22 @@ class ThoughtListViewModel: ObservableObject {
                     print("No documents")
                     return
                 }
-                
+                /*
                 self.thoughts = documents.map { (queryDocumentSnapshot) -> Thought in
                     let data = queryDocumentSnapshot.data()
                     let title = data["title"] as? String ?? ""
                     let body = data["body"] as? String ?? ""
+                    //let completed = data["completed"] as! Bool
                     return Thought(title: title, body: body)
+                }
+                */
+                
+                self.thoughtCellVMs = documents.map { (queryDocumentSnapshot) -> ThoughtCellViewModel in
+                    let data = queryDocumentSnapshot.data()
+                    let title = data["title"] as? String ?? ""
+                    let body = data["body"] as? String ?? ""
+                    //let completed = data["completed"] as! Bool
+                    return ThoughtCellViewModel(thought: Thought(title: title, body: body))
                 }
             }
         }
@@ -70,6 +86,7 @@ class ThoughtListViewModel: ObservableObject {
     func addThought(title: String, body: String) {
             do {
                 let data = ["title": title, "body": body] as [String : Any]
+                self.thoughtCellVMs.append(ThoughtCellViewModel(thought: Thought(title: title, body: body)))
                 try db.collection("thoughts").addDocument(data: data)
             }
             catch {

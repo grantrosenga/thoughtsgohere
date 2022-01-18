@@ -10,8 +10,9 @@ import SwiftUI
 
 struct Thought: Codable, Identifiable {
     var id: String = UUID().uuidString
-    var title: String?
-    var body: String?
+    var title: String
+    var body: String
+    //var completed: Bool
 }
 
 /*
