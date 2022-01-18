@@ -60,28 +60,21 @@ struct MainThoughtsView: View {
                     
                     ScrollView {
                         
-                        ForEach(self.thoughtListVM.thoughtCellVMs) { thoughtVM in
+                        ForEach(self.thoughtListVM.thoughts) { thought in
                             HStack {
-                                ThoughtCell(thoughtListVM: self.thoughtListVM, thoughtCellVM: thoughtVM)
+                                ThoughtCell(thoughtListVM: self.thoughtListVM, thoughtCellVM: ThoughtCellViewModel(thought: thought))
                                 .clipped()
                                 .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 0)
                                 .padding(.bottom, 5)
                                 
                                 if self.thoughtListVM.inEditMode {
                                     Button(action: {
-                                        NSLog("Deleted thought: \(thoughtVM.thought.title)")
+                                        //NSLog("Deleted thought: \(thoughtVM.thought.title)")
                                         withAnimation {
-                                            //self.thoughtListVM.deleteThought(thought: thoughtVM.thought)
-                                            self.thoughtListVM.deleteThought(thought: thoughtVM.thought)
-                                            self.thoughtListVM.deleteItem(element: thoughtVM)
-                                            /*
-                                            self.thoughtListVM.thoughtCellVMs.removeAll {
-                                                $0.id == thoughtVM.id
+                                            thoughtListVM.deleteThought(thought: thought)
+                                            thoughtListVM.thoughts.removeAll {
+                                                $0.id == thought.id
                                             }
-                                            */
-                                            
-                                            //self.thoughtListVM.thoughts.remove(at: count)
-                                            //self.thoughtListVM.fetchData()
                                         }
                                     }) {
                                         Image(systemName: "trash.fill").font(.title).foregroundColor(Color.red.opacity(0.8))
@@ -90,7 +83,6 @@ struct MainThoughtsView: View {
                                 }
                             }
                         }
-                        
                     }.background(gradientOrangeBlue).edgesIgnoringSafeArea(.all)
                     .cornerRadius(15)
                 }.zIndex(3)

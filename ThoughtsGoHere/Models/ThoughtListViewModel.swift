@@ -40,21 +40,12 @@ class ThoughtListViewModel: ObservableObject {
         }
     
     func deleteThought(thought: Thought) {
-        //thoughtCellVMs = thoughtCellVMs.filter() { $0 !== element }
         
         db.collection("thoughts").document(thought.id).delete() { err in
             if let err = err {
-              print("Error removing document: \(err)")
+                print("Error removing document: \(err)")
             }
-            else {
-                //self.fetchData()
-            
-              print("Document successfully removed!")
-            }
-          }
-        //thoughts = thoughts.filter() {$0.title !== thought.title}
-        //thoughts.remove(at: )
-    
+        }
     }
     
     func fetchData() {
@@ -63,22 +54,23 @@ class ThoughtListViewModel: ObservableObject {
                     print("No documents")
                     return
                 }
-                /*
-                self.thoughts = documents.map { (queryDocumentSnapshot) -> Thought in
-                    let data = queryDocumentSnapshot.data()
-                    let title = data["title"] as? String ?? ""
-                    let body = data["body"] as? String ?? ""
-                    //let completed = data["completed"] as! Bool
-                    return Thought(title: title, body: body)
-                }
-                */
                 
+                /*
                 self.thoughtCellVMs = documents.map { (queryDocumentSnapshot) -> ThoughtCellViewModel in
                     let data = queryDocumentSnapshot.data()
                     let title = data["title"] as? String ?? ""
                     let body = data["body"] as? String ?? ""
                     //let completed = data["completed"] as! Bool
                     return ThoughtCellViewModel(thought: Thought(title: title, body: body))
+                }
+                */
+                
+                self.thoughts = documents.map { (queryDocumentSnapshot) -> Thought in
+                    let data = queryDocumentSnapshot.data()
+                    let title = data["title"] as? String ?? ""
+                    let body = data["body"] as? String ?? ""
+                    //let completed = data["completed"] as! Bool
+                    return Thought(title: title, body: body)
                 }
             }
         }
@@ -87,7 +79,7 @@ class ThoughtListViewModel: ObservableObject {
             do {
                 let data = ["title": title, "body": body] as [String : Any]
                 self.thoughtCellVMs.append(ThoughtCellViewModel(thought: Thought(title: title, body: body)))
-                try db.collection("thoughts").addDocument(data: data)
+                db.collection("thoughts").addDocument(data: data)
             }
             catch {
                 print(error.localizedDescription)
